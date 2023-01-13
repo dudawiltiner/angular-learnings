@@ -1,0 +1,112 @@
+<section class="property-binding">
+  <article>
+    <h3>Interpolation / Interpolação</h3>
+    <p>Sting renderizada com a Interpolação ->{{ url }}</p>
+    <p>Resultado de 2 + 2 -> {{ 2 + 2 }}</p>
+    <p>Reaultso de 1 + 1 não é {{ 1 + 1 + getValue() }}</p>
+    <p>Curso de Angular e gosto dele -> {{ cursoAngular && getCurtirCurso() }}</p>
+  </article>
+
+  <article>
+    <h3>Property Binding</h3>
+    <img src="{{ urlImage }}">
+    <img [src]="urlImage">
+    <img bind-src="urlImage">
+  </article>
+
+  <article>
+    <h3>Class e Style Binding</h3>
+    <div>
+    Selecione uma classe:
+      <select #classe (change)="0"> 
+        <option value="alert-success">Sucesso</option>
+        <option value="alert-info">Info</option>
+        <option value="alert-warning">Alerta</option>
+        <option value="alert-danger">Erro</option>
+      </select>
+    </div>
+
+    <br><br>
+
+    <div class="alert {{classe.value}}" role="alert">
+      Texto conforme a escolha
+    </div>
+
+    <div class="alert" role="alert" [class.alert-success]="classe.value === 'alert-success'">Sucesso</div>
+    <div class="alert" role="alert" [class.alert-info]="classe.value === 'alert-info'">Info</div>
+    <div class="alert" role="alert" [class.alert-warning]="classe.value === 'alert-warning'">Alerta</div>
+    <div class="alert" role="alert" 
+    [class.alert-danger]="classe.value === 'alert-danger'" 
+    [style.display]="classe.value === 'alert-danger' ? 'block' : 'none'">Erro</div>
+  </article>
+
+  <article>
+    <h3>Event Binding</h3>
+    <div>
+      <button (click)="botaoClicado()" class="btn btn-danger">Me clique!</button>
+    </div>
+
+    <br><br>
+
+    <input type="text" (keyup)="onKeyUp($event)" 
+    (keyup.enter)="salvarValor($any($event.target).value)"/>
+    <div>Valor atual: {{ valorAtual }}</div>
+    <div>Valor salvo: {{ valorSalvo }}</div>
+
+    <br>
+
+    <span (mouseover)="onMouseOverOut()" 
+    (mouseout)="onMouseOverOut()" [class.hightlight]="isMouseOver">Passe o mouse sobre mim!</span>
+  </article>
+</section>
+
+<section class="two-way-biding">
+  <article>
+    <h3>
+      Two-way data binding
+    </h3>
+    <div>
+      <input type='text'
+        [value]="nome"
+        (input)="nome= $any($event.target).value"
+      />
+      <!-- ngModel é uma diretiva -->
+      <!-- [ngModel] -> biding propriedade,  model que representa um entidade que está instânciada no componente -->
+      <!-- (ngModel) -> biding de eventos, representa um método que vai aguardar alguma mudança -->
+      <input type='text'
+        [ngModel]="nome"  
+        (ngModelChange)="nome= $event"
+      />
+
+      <!-- two-way biding -> usa o 2 em um, propriedade e evento de uma vez -->
+      <!-- BANANA IN A BOX -> [()] -->
+      <input type="text"
+      [(ngModel)]="nome" />
+
+      <input type="text"
+      bindon-ngModel="nome" />
+
+      <p>Você digitou: {{ nome }}</p>
+
+      <div>
+        <p>Meu nome é {{ pessoa.nome }} e tenho {{ pessoa.idade }}</p>
+        <input type="text" [(ngModel)]="pessoa.nome" />
+        <input type="text" [(ngModel)]="pessoa.idade" />
+      </div>
+    </div>
+  </article>
+</section>
+
+
+<section class="input-output-properties">
+  <article>
+    <h3>Input/Output Properties</h3>
+
+    <!-- input property -> nome -->
+    <app-curso [nome]="nomeDoCurso"></app-curso>
+
+    <contador [valor]="valorInicial"
+      (mudouValor)="onMudouValor($event)"
+    ></contador>
+  </article>
+</section>
